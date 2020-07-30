@@ -15,18 +15,15 @@ setTimeout(roasted, 2000);
 //promise waits for timer to finish
 //resolve with message (console.log("resolved")) 
 
-
 var resolve = document.querySelector("#output")
   
-  var waitForRoast = timeoutms => new Promise((yes, no)=>{
-    var check = () => {
-      console.log("resolved")
+var waitForRoast = timeoutms => new Promise((yes, no)=>{
+
       if(resolve.innerHTML == "Boom Roasted!") 
-        yes()
+        (console.log("resolved"))
       else if((timeoutms -= 3000) < 0)
-        no("Rejected!")
+        (console.log("resolved"))
       else
         setTimeout(check, 3000)
-    }
-    setTimeout(check, 3000)
-  })
+})
+
