@@ -1,33 +1,47 @@
-//get data from html
-const resolve = document.querySelector("#output");
+const waitForRoast = document.querySelector("#wait");
 
-//create a timer that outputs a message at compeltion
-function wait() {
-    document.getElementById("output").innerHTML = "Wait for it...";
-}
-setTimeout(wait, 1000);
+const words = [
+   {title: "Wait for it..."},
+];
 
-function roasted() {
-    document.getElementById("output").innerHTML = "Boom Roasted!";
-}
-setTimeout(roasted, 2000);
-
-//promise waits for timer to finish
-const waitForRoast = timeoutms => new Promise((resolve, reject) => {  
-    let condition;  
-    
-    if(resolve.innerHTML == "Boom Roasted!") {    
-        resolve('Promise is resolved successfully.');  
-        } else if((timeoutms -= 3000) < 0) {
-        resolve('Promise is resolved successfully.');
-        } else {    
-        reject('Promise is rejected');  
+//getting info from somewhere
+function getWords() {
+  setTimeout(() => {
+    let output = "";
+    for (const word of words) {
+       output += `<p>${word.title}</p>`;  
     }
+    waitForRoast.innerHTML = output;
+  }, 1000); 
+}
+
+function hereItComes (msg) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      var error = false;
+      words.push({ title: "Boom Roasted!"});
+      
+      if (error) {
+        reject("Fail");
+      } else {
+        resolve();
+      }
+    }, 3000);
+  });
+}
+getWords();
+
+hereItComes("Boom Roasted!")
+  .then(() => {
+     getWords();
+})
+  .catch((err) => {
+    waitForRoast.innerHTML = err;
 });
 
-waitForRoast.then((message) => { 
-    console.log(message);
-}).catch((message) => { 
-    console.log(message);
-});
+/*const promise1 = hereItComes("Boom Roasted!");
 
+Promise.all([promise1]).then(() => {
+  getWords();
+});
+*/
